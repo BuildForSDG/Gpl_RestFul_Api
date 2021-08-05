@@ -1,0 +1,767 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "GPL API",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/v1/user/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "user login",
+                "description": "user can login with credentials",
+                "operationId": "login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/v1/user/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "user logout",
+                "description": "user logout",
+                "operationId": "Logout",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/user/profile": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "user Profile",
+                "description": "User Profile Details",
+                "operationId": "User Profile",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/gpl": {
+            "get": {
+                "tags": [
+                    "gpl"
+                ],
+                "summary": "Get list of gpl records",
+                "description": "Returns list of gpls",
+                "operationId": "getAllData",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "records limit",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GplResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "gpl"
+                ],
+                "summary": "Create a gpl records",
+                "description": "create a single gpls record",
+                "operationId": "createNewData",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateGplRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "201": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/gpl_Filter_year": {
+            "get": {
+                "tags": [
+                    "gpl_Filter_year"
+                ],
+                "summary": "Get list of gpl records by year",
+                "description": "Returns list of gpls by year",
+                "operationId": "getDataByYear",
+                "parameters": [
+                    {
+                        "name": "year",
+                        "in": "query",
+                        "description": "records year",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/gpl_Filter_dates": {
+            "get": {
+                "tags": [
+                    "gpl_Filter_dates"
+                ],
+                "summary": "Get list of gpl records betweent two dates",
+                "description": "Returns list of gpls betweent two dates",
+                "operationId": "getDataBtwDates",
+                "parameters": [
+                    {
+                        "name": "from_date",
+                        "in": "query",
+                        "description": "from_date ex: 01/04/2020",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    },
+                    {
+                        "name": "to_date",
+                        "in": "query",
+                        "description": "to_date ex: 20/04/2020",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/gpl/{id}": {
+            "get": {
+                "tags": [
+                    "gpl"
+                ],
+                "summary": "Get a single  gpl records",
+                "description": "Returns a single gpls record",
+                "operationId": "getSingleData",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Gpl id to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "gpl"
+                ],
+                "summary": "Update a gpl records",
+                "description": "Update a single gpls record",
+                "operationId": "updateData",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Gpl id to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateGplRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "gpl"
+                ],
+                "summary": "Delete a gpl records",
+                "description": "Delete a single gpls record",
+                "operationId": "deleteData",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Gpl id to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "GplResource": {
+                "title": "GplResource",
+                "description": "Gpl resource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/gpl"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "GplResource"
+                }
+            },
+            "gpl": {
+                "title": "gpl",
+                "description": "gpl model",
+                "properties": {
+                    "DATES": {
+                        "title": "DATE",
+                        "description": "date of the day",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2021-05-22"
+                    },
+                    "DATES_SAISIES_SAP": {
+                        "title": "DATES SAISIES SAP",
+                        "description": "DATES SAISIES SAP",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2021-05-22"
+                    },
+                    "DATES_LIVRAISON_PREV": {
+                        "title": "DATES LIVRAISON PREV",
+                        "description": "DATES LIVRAISON PREV",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2021-05-22"
+                    },
+                    "DATES__LIVRAISONS": {
+                        "title": "DATES  LIVRAISONS",
+                        "description": "DATES  LIVRAISONS",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2021-05-22"
+                    },
+                    "COMPTE": {
+                        "title": "COMPTE",
+                        "description": "COMPTE",
+                        "type": "string",
+                        "example": "RESEAU"
+                    },
+                    "NUMERO_DE_BL": {
+                        "title": "NUMERO DE BL",
+                        "description": "NUMERO DE BL",
+                        "type": "string",
+                        "example": "000123456"
+                    },
+                    "_6_kg": {
+                        "title": "6 KG",
+                        "description": "6 KG",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 80
+                    },
+                    "_12_kg": {
+                        "title": "12 KG",
+                        "description": "12 KG",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 60
+                    },
+                    "_18_kg": {
+                        "title": "18 KG",
+                        "description": "18 KG",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 40
+                    },
+                    "_32_kg": {
+                        "title": "32 KG",
+                        "description": "32 KG",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 30
+                    },
+                    "QUANTITE_PREV": {
+                        "title": "QUANTITE PREV",
+                        "description": "35 KG",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 80
+                    },
+                    "QUANTITE_REEL": {
+                        "title": "QUANTITE REEL",
+                        "description": "35 KG",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 80
+                    },
+                    "CAMION": {
+                        "title": "CAMION",
+                        "description": "CAMION",
+                        "type": "string",
+                        "example": "LTSR 896 AJ"
+                    },
+                    "TRANSPORTEUR": {
+                        "title": "TRANSPORTEUR",
+                        "description": "TRANSPORTEUR",
+                        "type": "string",
+                        "example": "SOCOTRAP"
+                    },
+                    "CHAUFFEUR": {
+                        "title": "CHAUFFEUR",
+                        "description": "CHAUFFEUR",
+                        "type": "string",
+                        "example": "DONGMO"
+                    },
+                    "POIDS_KG_PREV": {
+                        "title": "POIDS(KG) PREV",
+                        "description": "POIDS(KG) PREV",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": null
+                    },
+                    "POIDS_kg": {
+                        "title": "POIDS(kg)",
+                        "description": "POIDS(kg)",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1000
+                    },
+                    "VILLE": {
+                        "title": "VILLE",
+                        "description": "VILLE",
+                        "type": "string",
+                        "example": "DLA"
+                    },
+                    "CONTENANT": {
+                        "title": "CONTENANT",
+                        "description": "CONTENANT",
+                        "type": "string",
+                        "example": ""
+                    },
+                    "N_B_EXPEDITION": {
+                        "title": "N B EXPEDITION",
+                        "description": "N B EXPEDITION",
+                        "type": "string",
+                        "example": ""
+                    },
+                    "COMMENTAIRE": {
+                        "title": "COMMENTAIRE",
+                        "description": "COMMENTAIRE",
+                        "type": "string",
+                        "example": ""
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "gpl"
+                }
+            },
+            "CreateGplRequest": {
+                "title": "Store Project request",
+                "description": "Store Project request body data",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "DATES": {
+                        "title": "DATE",
+                        "description": "date of the day",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2021-05-22"
+                    },
+                    "DATES_SAISIES_SAP": {
+                        "title": "DATES SAISIES SAP",
+                        "description": "DATES SAISIES SAP",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2021-05-22"
+                    },
+                    "DATES_LIVRAISON_PREV": {
+                        "title": "DATES LIVRAISON PREV",
+                        "description": "DATES LIVRAISON PREV",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2021-05-22"
+                    },
+                    "DATES__LIVRAISONS": {
+                        "title": "DATES  LIVRAISONS",
+                        "description": "DATES  LIVRAISONS",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2021-05-22"
+                    },
+                    "COMPTE": {
+                        "title": "COMPTE",
+                        "description": "COMPTE",
+                        "type": "string",
+                        "example": "RESEAU"
+                    },
+                    "NUMERO_DE_BL": {
+                        "title": "NUMERO DE BL",
+                        "description": "NUMERO DE BL",
+                        "type": "string",
+                        "example": "000123456"
+                    },
+                    "_6_kg": {
+                        "title": "6 KG",
+                        "description": "6 KG",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 80
+                    },
+                    "_12_kg": {
+                        "title": "12 KG",
+                        "description": "12 KG",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 60
+                    },
+                    "_18_kg": {
+                        "title": "18 KG",
+                        "description": "18 KG",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 40
+                    },
+                    "_32_kg": {
+                        "title": "32 KG",
+                        "description": "32 KG",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 30
+                    },
+                    "QUANTITE_PREV": {
+                        "title": "QUANTITE PREV",
+                        "description": "35 KG",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 80
+                    },
+                    "QUANTITE_REEL": {
+                        "title": "QUANTITE REEL",
+                        "description": "35 KG",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 80
+                    },
+                    "CAMION": {
+                        "title": "CAMION",
+                        "description": "CAMION",
+                        "type": "string",
+                        "example": "LTSR 896 AJ"
+                    },
+                    "TRANSPORTEUR": {
+                        "title": "TRANSPORTEUR",
+                        "description": "TRANSPORTEUR",
+                        "type": "string",
+                        "example": "SOCOTRAP"
+                    },
+                    "CHAUFFEUR": {
+                        "title": "CHAUFFEUR",
+                        "description": "CHAUFFEUR",
+                        "type": "string",
+                        "example": "DONGMO"
+                    },
+                    "POIDS_KG_PREV": {
+                        "title": "POIDS(KG) PREV",
+                        "description": "POIDS(KG) PREV",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": null
+                    },
+                    "POIDS_kg": {
+                        "title": "POIDS(kg)",
+                        "description": "POIDS(kg)",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1000
+                    },
+                    "VILLE": {
+                        "title": "VILLE",
+                        "description": "VILLE",
+                        "type": "string",
+                        "example": "DLA"
+                    },
+                    "CONTENANT": {
+                        "title": "CONTENANT",
+                        "description": "CONTENANT",
+                        "type": "string",
+                        "example": ""
+                    },
+                    "N_B_EXPEDITION": {
+                        "title": "N B EXPEDITION",
+                        "description": "N B EXPEDITION",
+                        "type": "string",
+                        "example": ""
+                    },
+                    "COMMENTAIRE": {
+                        "title": "COMMENTAIRE",
+                        "description": "COMMENTAIRE",
+                        "type": "string",
+                        "example": ""
+                    }
+                },
+                "type": "object"
+            },
+            "LoginRequest": {
+                "title": "Login request",
+                "description": "Loginrequest body data",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "email": {
+                        "title": "email",
+                        "description": "email",
+                        "type": "string",
+                        "example": "myemail"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "password",
+                        "type": "string",
+                        "example": "mypassword"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "apiAuth": {
+                "type": "http",
+                "description": "Login with email and password to get the authentication token",
+                "name": "Token based Based",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
